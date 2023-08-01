@@ -377,7 +377,7 @@ def parse_target(args: argparse.Namespace) -> None:
             )
         args.target = target
         args.target_kind = args.target.kind.default_keys[0]
-    elif args.target == "metal_x86_64":
+    elif args.target == "metal_arm64":
         from tvm.contrib import xcode  # pylint: disable=import-outside-toplevel
 
         args.target = tvm.target.Target(
@@ -389,13 +389,13 @@ def parse_target(args: argparse.Namespace) -> None:
                     "thread_warp_size": 1,
                 }
             ),
-            host="llvm -mtriple=x86_64-apple-darwin",
+            host="llvm -mtriple=arm64-apple-darwin",
         )
-        args.target_kind = "metal_x86_64"
+        args.target_kind = "metal_arm64"
         args.export_kwargs = {
             "fcompile": xcode.create_dylib,
             "sdk": "macosx",
-            "arch": "x86_64",
+            "arch": "arm64",
         }
         args.lib_format = "dylib"
     elif args.target in ["iphone", "iphone-dylib", "iphone-tar"]:
